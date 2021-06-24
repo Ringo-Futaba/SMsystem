@@ -1,0 +1,123 @@
+{% load staticfiles %}
+<!DOCTYPE HTML>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="renderer" content="webkit|ie-comp|ie-stand">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+<!--[if lt IE 9]>
+<script type="text/javascript" src="lib/html5shiv.js"></script>
+<script type="text/javascript" src="lib/respond.min.js"></script>
+<![endif]-->
+<link rel="stylesheet" type="text/css" href="{% static 'h-ui/css/H-ui.min.css'%}" />
+<link rel="stylesheet" type="text/css" href="{% static 'h-ui.admin/css/H-ui.admin.css' %}" />
+<link rel="stylesheet" type="text/css" href="{% static 'lib/Hui-iconfont/1.0.8/iconfont.css' %}" />
+<link rel="stylesheet" type="text/css" href="{% static 'h-ui.admin/skin/default/skin.css' %}" id="skin" />
+<link rel="stylesheet" type="text/css" href="{% static 'h-ui.admin/css/style.css' %}" />
+<!--[if IE 6]>
+<script type="text/javascript" src="lib/DD_belatedPNG_0.0.8a-min.js" ></script>
+<script>DD_belatedPNG.fix('*');</script>
+<![endif]-->
+<title>客户详细信息</title>
+</head>
+<body>
+<div class="cl pd-20" style=" background-color:#5bacb6">
+	<img class="avatar size-XL l" src="{% static 'h-ui/images/ucnter/avatar-default.jpg' %}">
+	<dl style="margin-top: 25px;margin-left:80px; color:#fff">
+		<dt>
+			<span class="f-18">{{ customer.name }}</span>
+		</dt>
+
+	</dl>
+</div>
+<div class="pd-20">
+	<table class="table">
+		<tbody>
+			<tr>
+				<th class="text-r" width="80">性别：</th>
+				<td>{{ customer.sex }}</td>
+			</tr>
+			<tr>
+				<th class="text-r">手机：</th>
+				<td>{{ customer.phone }}</td>
+			</tr>
+			<tr>
+				<th class="text-r">邮箱：</th>
+				<td>{{ customer.email }}</td>
+			</tr>
+			<tr>
+				<th class="text-r">备注：</th>
+				<td>{{ customer.remark }}</td>
+			</tr>
+			<tr>
+				<th class="text-r">注册时间：</th>
+				<td>{{ customer.create_time }}</td>
+			</tr>
+            <tr>
+				<th class="text-r">&nbsp;</th>
+				<td>&nbsp;</td>
+			</tr>
+
+
+
+		</tbody>
+	</table>
+   <div><th class="text-r"><B>成交过的订单:</B></th>
+   {% if customer_orders.exists %}
+        <table style="margin-left: 125px;width: 340px">
+            {% for customer_order in customer_orders %}
+                <tr>
+                <td><a href="#" onclick="order_show('{% url 'order:info'%}?order_id={{ customer_order.order_id }}','1000','850')">{{ customer_order.order_id }}</a></td>
+                </tr>
+                 <tr>
+                <td>&nbsp;</td>
+                </tr>
+            {% endfor %}
+        </table>
+   {% else  %}
+       <table style="margin-left: 125px;width: 340px">
+
+            <tr>
+            <td>&nbsp;</td>
+            </tr>
+           <tr>
+            <td>&nbsp;</td>
+            </tr>
+            <tr>
+            <td>无交易过的订单！</td>
+            </tr>
+       </table>
+{% endif %}
+</div>
+</div>
+<!--_footer 作为公共模版分离出去-->
+<script type="text/javascript" src="{% static 'lib/jquery/1.9.1/jquery.min.js' %}"></script>
+<script type="text/javascript" src="{% static 'lib/layer/2.4/layer.js' %}"></script>
+<script type="text/javascript" src="{% static 'h-ui/js/H-ui.min.js' %}"></script>
+<script type="text/javascript" src="{% static 'h-ui.admin/js/H-ui.admin.js' %}"></script>
+<!--/_footer 作为公共模版分离出去-->
+
+<!--请在下方写此页面业务相关的脚本-->
+<script type="text/javascript">
+/*订单详情*/
+//在customer_info页面打开order_info会出现layer嵌套，故需要重新写代码来让两者在同一DOM层级
+//在弹出层A(子页面1)打开新弹出层B(子页面2)，弹出层A、B在同一DOM层级，即父页面内有多个iframe，子页面2不嵌套在子页面1中；<br>//在弹出层A(子页面1)中封装如下方法，在需要触发打开新弹出层B事件中执行如下方法；
+function order_show(url, width, height) {
+                parent.layer.open({
+                type: 2,
+                title: false,
+                closeBtn: true,
+                shadeClose: false,
+                shade: 0.6,
+                border: [0],
+                area: [width <= 0 ? "auto" : width + 'px', height <= 0 ? "auto" : height + 'px'],
+                content: url,
+            })
+        }
+
+
+</script>
+</body>
+</html>

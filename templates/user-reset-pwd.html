@@ -1,0 +1,100 @@
+{% load staticfiles %}
+<!DOCTYPE HTML>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="renderer" content="webkit|ie-comp|ie-stand">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+<!--[if lt IE 9]>
+<script type="text/javascript" src="http://libs.useso.com/js/html5shiv/3.7/html5shiv.min.js"></script>
+<script type="text/javascript" src="http://libs.useso.com/js/respond.js/1.4.2/respond.min.js"></script>
+<script type="text/javascript" src="http://cdn.bootcss.com/css3pie/2.0beta1/PIE_IE678.js"></script>
+<![endif]-->
+<link type="text/css" rel="stylesheet" href="{% static 'h-ui/css/H-ui.css' %}"/>
+<link type="text/css" rel="stylesheet" href="{% static 'h-ui.admin/css/H-ui.admin.css' %}"/>
+
+<!--[if IE 7]>
+<link href="http://www.bootcss.com/p/font-awesome/assets/css/font-awesome-ie7.min.css" rel="stylesheet" type="text/css" />
+<![endif]-->
+<title>修改密码</title>
+</head>
+<body>
+<div class="pd-20"  style="margin-left:700px;margin-right: 350px;margin-top: 300px">
+  <form class="Huiform"  method="post" id="resetpwd" name="resetpwd" >
+    <table class="table">
+      <tbody>
+        <tr>
+          <th width="120" class="text-r"><span class="c-red">*</span>请输入密码：</th>
+          <td><input type="password" style="width:200px" class="input-text" value="" id="password12" name="password12"></td>
+            <label id="password12-error" class="error" for="password12" style="display: block;margin-right:210px;margin-top:35px"></label>
+        </tr>
+        <tr>
+          <th width="120" class="text-r"><span class="c-red">*</span>再次输入密码：</th>
+          <td><input type="password" style="width:200px" class="input-text" value=""  id="password13"  name="password13"></td>
+            <label id="password13-error" class="error" for="password13" style="display: block;margin-top:95px;margin-right:200px"></label>
+        </tr>
+        <tr>
+          <th></th>
+          <td><button class="btn btn-success radius" type="submit"><i class="icon-ok"></i> 确定</button></td>
+        </tr>
+      </tbody>
+    </table>
+  </form>
+</div>
+<!--/_footer 作为公共模版分离出去-->
+<script type="text/javascript" src="http://cdn.bootcss.com/jquery/2.1.3/jquery.min.js"></script>
+<script type="text/javascript" src="{% static 'lib/layer/2.4/layer.js'%}"></script>
+<script type="text/javascript" src="{% static 'h-ui/js/H-ui.min.js'%}"></script>
+<script type="text/javascript" src="{% static 'h-ui.admin/js/H-ui.admin.js'%}"></script>
+<!--/_footer 作为公共模版分离出去-->
+
+<!--请在下方写此页面业务相关的脚本-->
+<script type="text/javascript" src="{% static 'lib/My97DatePicker/4.8/WdatePicker.js'%}"></script>
+<script type="text/javascript" src="{% static 'lib/jquery.validation/1.14.0/jquery.validate.js'%}"></script>
+<script type="text/javascript" src="{% static 'lib/jquery.validation/1.14.0/validate-methods.js'%}"></script>
+<script type="text/javascript" src="{% static 'lib/jquery.validation/1.14.0/messages_zh.js'%}"></script>
+<script type="text/javascript">
+$(function(){
+
+	$("#resetpwd").validate({
+		rules:{
+			password12:{
+				required:true,
+				minlength:8,
+				maxlength:16,
+			},
+			password13:{
+
+				equalTo: "#password12",
+			},
+
+		},
+        messages:{
+		  password13: "两次输入的密码不同！"
+        },
+		onkeyup:false,
+		focusCleanup:true,
+		success:"valid",
+		submitHandler:function(form){
+			form.ajaxSubmit({
+                type: 'post',
+                url: '',
+                success: function (data) {
+                    var index = parent.layer.getFrameIndex(window.name);
+                    $("input[type=submit]").attr('disabled',false);
+                },
+                error: function(){
+                    $("input[type=submit]").attr('disabled',false)//即使AJAX失败也需要将按钮设置为可用状态，因为有可能是网络问题导致的失败，所以需要将按钮设置为可用
+                }
+            });
+
+			//parent.$('.btn-refresh').click();
+			parent.layer.close(index);
+		}
+	});
+});
+</script>
+</body>
+</html>

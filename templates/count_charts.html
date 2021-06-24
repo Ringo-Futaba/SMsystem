@@ -1,0 +1,121 @@
+{% load staticfiles %}
+<!DOCTYPE HTML>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="renderer" content="webkit|ie-comp|ie-stand">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+<!--[if lt IE 9]>
+<script type="text/javascript" src="lib/html5shiv.js"></script>
+<script type="text/javascript" src="lib/respond.min.js"></script>
+<![endif]-->
+<link rel="stylesheet" type="text/css" href="{% static 'h-ui/css/H-ui.min.css'%}" />
+<link rel="stylesheet" type="text/css" href="{% static 'h-ui.admin/css/H-ui.admin.css' %}" />
+<link rel="stylesheet" type="text/css" href="{% static 'lib/Hui-iconfont/1.0.8/iconfont.css' %}" />
+<link rel="stylesheet" type="text/css" href="{% static 'h-ui.admin/skin/default/skin.css' %}" id="skin" />
+<link rel="stylesheet" type="text/css" href="{% static 'h-ui.admin/css/style.css' %}" />
+<!--[if IE 6]>
+<script type="text/javascript" src="lib/DD_belatedPNG_0.0.8a-min.js" ></script>
+<script>DD_belatedPNG.fix('*');</script>
+<![endif]-->
+<title>柱状图统计</title>
+</head>
+<body>
+<nav class="breadcrumb"><i class="Hui-iconfont">&#xe67f;</i> 首页 <span class="c-gray en">&gt;</span> 统计管理 <span class="c-gray en">&gt;</span> 统计图 <a class="btn btn-success radius r" style="line-height:1.6em;margin-top:3px" href="javascript:location.replace(location.href);" title="刷新" ><i class="Hui-iconfont">&#xe68f;</i></a></nav>
+<div class="page-container">
+	<div id="container" style="min-width:700px;height:400px"></div>
+</div>
+<article class="page-container">
+	<form  method="get" class="form form-horizontal" id="form-member-add">
+
+        <div class="row cl">
+			<label class="form-label col-xs-4 col-sm-3"><span class="c-red">*</span>选择年份：</label>
+			<div class="formControls col-xs-8 col-sm-9" style="width: 200px"> <span class="select-box">
+				<select id="year" name="year" class="select">
+					<option value="">请选择</option>
+                    {% for year in years %}
+					<option value="{{ year }}">{{ year }}</option>
+                    {% endfor %}
+				</select>
+				</span> </div>
+		</div>
+		</div>
+
+		<div class="row cl">
+			<div class="col-xs-8 col-sm-9 col-xs-offset-4 col-sm-offset-3">
+				<input class="btn btn-primary radius" type="submit" value="&nbsp;&nbsp;确定&nbsp;&nbsp;">
+			</div>
+		</div>
+	</form>
+</article>
+<!--_footer 作为公共模版分离出去-->
+<script type="text/javascript" src="{% static 'lib/jquery/1.9.1/jquery.min.js'%}"></script>
+<script type="text/javascript" src="{% static 'lib/layer/2.4/layer.js'%}"></script>
+<script type="text/javascript" src="{% static 'h-ui/js/H-ui.min.js'%}"></script>
+<script type="text/javascript" src="{% static 'h-ui.admin/js/H-ui.admin.js'%}"></script> <!--/_footer 作为公共模版分离出去-->
+
+<!--请在下方写此页面业务相关的脚本-->
+<script type="text/javascript" src="{% static 'lib/hcharts/Highcharts/5.0.6/js/highcharts.js' %}"></script>
+<script type="text/javascript" src="{% static 'lib/hcharts/Highcharts/5.0.6/js/modules/exporting.js' %}"></script>
+<script type="text/javascript">
+$(function () {
+    $('#container').highcharts({
+        chart: {
+            type: 'column'
+        },
+        title: {
+            text: '销售额统计'
+        },
+        subtitle: {
+            text: '{{ year }}年销售额'
+        },
+        xAxis: {
+            categories: [
+                '一月',
+                '二月',
+                '三月',
+                '四月',
+                '五月',
+                '六月',
+                '七月',
+                '八月',
+                '九月',
+                '十月',
+                '十一月',
+                '十二月'
+            ]
+        },
+        yAxis: {
+            min: 0,
+            title: {
+                text: 'Rainfall (mm)'
+            }
+        },
+        tooltip: {
+            headerFormat: '<span style="font-size:10px">{point.key}</span><table>',
+            pointFormat: '<tr><td style="color:{series.color};padding:0">{series.name}: </td>' +
+                '<td style="padding:0"><b>{point.y:.1f} 元</b></td></tr>',
+            footerFormat: '</table>',
+            shared: true,
+            useHTML: true
+        },
+        plotOptions: {
+            column: {
+                pointPadding: 0.2,
+                borderWidth: 0
+            }
+        },
+        series: [{
+            name: '{{ year }}年销售额',
+            data: {{data_list}}
+
+        },
+
+        ]
+    });
+});				
+</script>
+</body>
+</html>

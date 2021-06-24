@@ -1,0 +1,115 @@
+{% load staticfiles %}
+<!DOCTYPE HTML>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Carbon - Admin Template</title>
+    <link rel="stylesheet" href="{% static 'orderstatic/vendor/simple-line-icons/css/simple-line-icons.css' %}">
+    <link rel="stylesheet" href="{% static 'orderstatic/vendor/font-awesome/css/fontawesome-all.min.css' %}">
+    <link rel="stylesheet" href="{% static 'orderstatic/css/styles.css' %}">
+</head>
+<body class="sidebar-fixed header-fixed">
+<div class="page-wrapper">
+            <div class="container">
+                <div class="row">
+                    <div class="col-12">
+                        <div class="card">
+                            <div class="card-body p-0">
+                                <div class="row p-5">
+                                    <div class="col-md-6">
+                                        <img src="{% static 'orderstatic/imgs/logo.png'%}">
+                                    </div>
+
+                                    <div class="col-md-6 text-right">
+                                        <p class="font-weight-bold mb-1">订单 #550</p>
+                                        <p class="text-muted">{{ order.create_time }}</p>
+                                    </div>
+                                </div>
+
+
+                                <div style="margin-left: 90px"><b>订单号：</b><div style="margin-left:90px">{{ order.order_id }}</div></div>
+
+
+
+                                <hr class="my-5">
+
+                                <div class="row pb-5 p-5">
+                                    <div class="col-md-6">
+                                        <p class="font-weight-bold mb-4"><b>客户信息</b></p>
+                                        <p class="mb-1">{{ order.customer.name }}先生</p>
+                                        <p>&nbsp;</p>
+                                        <p class="mb-1">{{ order.customer.create_time }}&nbsp;&nbsp;加入</p>
+                                        <p class="mb-1">mobile: &nbsp;&nbsp;{{ order.customer.phone }}</p>
+                                    </div>
+
+                                    <div class="col-md-6 text-right">
+                                        <p class="font-weight-bold mb-4"><b>付款详情</b></p>
+                                        <p class="mb-1"><span class="text-muted">Name: </span>&nbsp; {{ order.customer.name }}</p>
+                                        <p class="mb-1"><span class="text-muted">Count: </span>&nbsp; ￥{{total_price}}</p>
+                                        <p class="mb-1"><span class="text-muted">Status: </span>&nbsp; {{ order.get_order_status_display }}</p>
+                                    </div>
+                                </div>
+
+                                <div class="row p-5">
+                                    <div class="col-md-12">
+                                        <table class="table">
+                                            <thead>
+                                            <tr>
+                                                <th class="border-0 text-uppercase small font-weight-bold">产品ID</th>
+                                                <th class="border-0 text-uppercase small font-weight-bold">产品名</th>
+
+                                                <th class="border-0 text-uppercase small font-weight-bold">数量</th>
+                                                <th class="border-0 text-uppercase small font-weight-bold">单价</th>
+                                                <th class="border-0 text-uppercase small font-weight-bold">小计</th>
+                                            </tr>
+                                            </thead>
+                                            <tbody>
+                                            {% for ordergood in ordergoods %}
+                                            <tr>
+                                                <td>{{ ordergood.goods_id }}</td>
+                                                <td>{{ ordergood.goods.name }}</td>
+                                                <td>{{ ordergood.count }}</td>
+
+                                                <td>￥{{ ordergood.goods.price }}</td>
+                                                <td>￥{{ ordergood.totalPrice }}</td>
+                                            </tr>
+                                          {% endfor %}
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+
+                                <div class="d-flex flex-row-reverse bg-dark text-white p-4">
+                                    <div class="py-3 px-5 text-right">
+                                        <div class="mb-2">实付价</div>
+                                        <div class="h2 font-weight-light">￥{{ total_price }}</div>
+                                    </div>
+
+                                    <div class="py-3 px-5 text-right">
+                                        <div class="mb-2">利润率</div>
+                                        <div class="h2 font-weight-light">{{ discount }}%</div>
+                                    </div>
+
+                                    <div class="py-3 px-5 text-right">
+                                        <div class="mb-2">成本价</div>
+                                        <div class="h2 font-weight-light">￥{{ purchase }}</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+</div>
+<script src="{% static 'orderstatic/vendor/jquery/jquery.min.js' %}"></script>
+<script src="{% static 'orderstatic/vendor/popper.js/popper.min.js' %}"></script>
+<script src="{% static 'orderstatic/vendor/bootstrap/js/bootstrap.min.js' %}"></script>
+<script src="{% static 'orderstatic/vendor/chart.js/chart.min.js' %}"></script>
+<script src="{% static 'orderstatic/js/carbon.js' %}"></script>
+<script src="{% static 'orderstatic/js/demo.js' %}"></script>
+</body>
+</html>

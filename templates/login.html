@@ -1,0 +1,60 @@
+{% load staticfiles %}
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>登录</title>
+<link rel="stylesheet" type="text/css" href="{% static 'css/style1.css' %}" />
+<link rel="stylesheet" type="text/css" href="{% static 'css/body1.css' %}"/>
+</head>
+<body>
+
+{{ errmsg }}
+<div class="container">
+	<section id="content">
+		<form method="post">
+            {% csrf_token %}
+			<h1>会员登录</h1>
+			<div>
+				<input type="text" placeholder="用户名" required="" id="username" name="username" onkeyup="value=value.replace(/[\u4E00-\u9FA5]/g,'')"/>
+			</div>
+			<div>
+				<input type="password" placeholder="密码" required="" id="pwd" name="pwd"/>
+			</div>
+			 <div class="">
+				<span class="help-block u-errormessage" id="js-server-helpinfo">&nbsp;</span>			</div>
+			<div>
+				<!-- <input type="submit" value="Log in" /> -->
+				<input type="submit" value="登录" class="btn btn-primary" id="js-btn-login"/>
+				<a href="#" onclick="password_reset('忘记密码?','{% url 'user:reset'%}','400','500')">忘记密码?</a>
+				<!-- <a href="#">Register</a> -->
+			</div>
+		</form><!-- form -->
+		 <div class="button">
+			<span class="help-block u-errormessage" id="js-server-helpinfo">&nbsp;</span>
+			<a href="#">下载网盘</a>	
+		</div> <!-- button -->
+	</section><!-- content -->
+</div>
+<!-- container -->
+
+
+<br><br><br><br>
+<div style="text-align:center;">
+<p>来源:More Templates <a href="http://www.cssmoban.com/" target="_blank" title="模板之家">模板之家</a> - Collect from <a href="http://www.cssmoban.com/" title="网页模板" target="_blank">网页模板</a></p>
+</div>
+</body>
+<!--_footer 作为公共模版分离出去-->
+<script type="text/javascript" src="{% static 'lib/jquery/1.9.1/jquery.min.js' %}"></script>
+<script type="text/javascript" src="{% static 'lib/layer/2.4/layer.js' %}"></script>
+<script type="text/javascript" src="{% static 'h-ui/js/H-ui.min.js' %}"></script>
+<script type="text/javascript" src="{% static 'h-ui.admin/js/H-ui.admin.js' %}"></script> <!--/_footer 作为公共模版分离出去-->
+<script type="text/javascript">
+function password_reset(title,url,w,h) {
+    layer_show(title,url,w,h)
+}
+
+
+</script>
+
+</html>
